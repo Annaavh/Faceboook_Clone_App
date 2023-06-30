@@ -9,9 +9,12 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 // import authRouter from "./routes/authRouter";
-// import authRouter from "./routes/authRouter";
+// import userRoutes from "./routes/users.js";
+// import postRoutes from "./routes/posts.js";
 
 import { login, register } from "./controllers/auth.js";
+// import { createPost } from "./controllers/posts.js";
+import { verifyToken } from "./middleware/auth.js";
 const router = express.Router();
 
 /* CONFIGURATIONS */
@@ -41,10 +44,13 @@ const upload = multer({ storage });
 
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
+// app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
 /* ROUTES */
 // app.use("/auth", authRouter); // it doesn't understand directory, so i had no choice and did it like the under code, but it's not correct
 app.post("/login", login);
+// app.use("/users", userRoutes);
+// app.use("/posts", postRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
